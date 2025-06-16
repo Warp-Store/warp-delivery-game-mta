@@ -1,0 +1,13 @@
+<meta>
+   <info author = 'Warp Store' type = 'script' name = 'warpstore_integration' version = '2.0' />
+
+   <script src = 'config.lua' type = 'shared' cache = 'false' />
+   <script src = 'commands.lua' type = 'shared' cache = 'false' />
+   <script src = 'src/assets/source/client.lua' type = 'client' cache = 'false' />
+   <script src = 'src/assets/source/server.lua' type = 'server' />
+   
+   <file src = 'src/assets/html/index.html' />
+   <file src = 'src/assets/fonts/roboto-bold.ttf' cache = 'false' />
+
+   <min_mta_version client = '1.5.9' server = '1.5.9' />
+</meta>
