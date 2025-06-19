@@ -41,7 +41,7 @@ authorization = function( )
      },
      function( resposta, erro )
           local resposta = fromJSON( resposta )
-          if erro.statusCode ~= 200 then
+          if not erro.success then
                outputDebugString( '[Warp-Delivery] - Sistema desligado, contate a warpstore.', 4, 215, 88, 88 )
                stopResource( getThisResource( ) )
           else
@@ -65,7 +65,7 @@ pending = function( )
           postData = '{}'
      },
      function( resposta, erro )
-          if erro.statusCode ~= 200 then
+          if not erro.success then
                return outputDebugString( '[Warp-Delivery] - Erro, contate a warp store.', 4, 215, 88, 88 )
           end
           local resposta = fromJSON( resposta ) or { }
@@ -149,7 +149,7 @@ approve = function( command )
           postData = toJSON({commandQueueId = command}):gsub("[%[%]]", "")
      }, 
      function( resposta, erro )
-          if erro.statusCode ~= 200 then
+          if not erro.success then
                return outputDebugString( '[Warp-Delivery] - Erro, contate a warp store.', 4, 215, 88, 88 )
           end
      end, '', false)
