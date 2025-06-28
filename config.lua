@@ -52,7 +52,7 @@ config = {
             ['repetições'] = 0; -- Verificação de quantas vezes ira ficar rodando o sistema, deixe em 0 para sempre verificar.
         };
         ['development'] = { -- Verificação para ficar testando comando deixe em false e ele não ira atualizar no site que foi entregue.
-            ['update:status'] = false; -- Não mexer com o servidor aberto pois ira ficar liberando o produto a todo momento sem atualizar no site que já foi entregue.
+            ['update:status'] = true; -- Não mexer com o servidor aberto pois ira ficar liberando o produto a todo momento sem atualizar no site que já foi entregue.
         };
     };
 }
