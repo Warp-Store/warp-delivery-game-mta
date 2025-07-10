@@ -99,6 +99,7 @@ delivery = function( id, args, checkout )
      if not alvo then
           return
      end
+     local avisar = { }
      for i, v in ipairs( args or { } ) do
           for index, name in ipairs( v.commands ) do
                local product = string.match( name, '^[^%s]+' )
@@ -111,11 +112,11 @@ delivery = function( id, args, checkout )
                if type( commands[ product ][ 1 ] ) ~= 'function' then
                     return outputDebugString( '[Warp-Delivery] - Erro, adicione uma função na sua exportação → '..product..' no commands.lua.', 4, 247, 186, 112 )
                end
-               if config['entrega']['balões']['ativar'] then
+               if config['entrega']['balões']['ativar'] and not avisar[v.name] then
                     local texto = string.change( config['entrega']['balões']['texto'], { ['name'] = removeHex( getPlayerName( alvo ) ), ['id'] = id, ['product'] = v.name, ['hex'] = config['color:hex'] })
                     createBallons( ( config['entrega']['balões']['visivel'] and root or alvo ), texto, config['entrega']['balões']['quantidade'], (config['entrega']['balões']['tempo'] * config['entrega']['balões']['formato']) )
                end
-               if config['entrega']['chatbox']['ativar'] then
+               if config['entrega']['chatbox']['ativar'] and not avisar[v.name] then
                     local texto = string.change( config['entrega']['chatbox']['texto'], { ['name'] = removeHex( getPlayerName( alvo ) ), ['id'] = id, ['product'] = v.name, ['hex'] = config['color:hex'] })
                     outputChatBox( texto, ( config['entrega']['chatbox']['visivel'] and root or alvo ), config['entrega']['chatbox']['rgb'][1], config['entrega']['chatbox']['rgb'][2], config['entrega']['chatbox']['rgb'][3], true  )
                end
@@ -130,8 +131,9 @@ delivery = function( id, args, checkout )
                for i = 1, v.quantity do
                     commands[ product ][ 1 ]( alvo, parseArgs( name ) )
                end
-               if config['development']['update:status'] then
+               if config['development']['update:status'] and not avisar[v.name] then
                     approve( checkout )
+                    avisar[ v.name ] = true
                     outputDebugString( '[Warp-Delivery] - Produto '..v.name..' foi entregue ao jogador '..removeHex( getPlayerName( alvo ) )..' ('..id..').', 4, 85, 204, 204 )
                end
           end
