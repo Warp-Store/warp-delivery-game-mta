@@ -48,12 +48,7 @@ commands = {
             local vipNumber = args[ 2 ]
             local vipDays = tonumber( args[ 3 ] )
             local HSVIP = exports['[HS]VIP_System']
-            local playerAccount = getAccountName( getPlayerAccount( player ))
-            local premium = HSVIP:getPremium( playerAccount, vipName )
-            local dados_json = fromJSON( premium['infos'] )
-            local calculo = vipDays + ( HSVIP:getDateVip( dados_json['day_vecimento'], dados_json['month_vecimento'], dados_json['year_vecimento'] ) )
-            HSVIP:takePremium( playerAccount, vipName )
-            HSVIP:givePremium( playerAccount, vipName, calculo, 'Dias', 'VIP:0'..vipNumber )
+            HSVIP:setPlayerVip( player, vipName, vipDays )     
         end;
     };
     ['hyperscripts:addCoin'] = {
@@ -69,11 +64,10 @@ commands = {
             local vehicle = string.gsub( args[ 1 ], '-', ' ' );
             local vehicleCategory = string.gsub( args[ 2 ], '-', ' ' );
             local vehicleModel = tonumber( args[ 3 ] );
-            local conce = exports['[HS]Dealership_System'];
             local account = getAccountName( getPlayerAccount( player ) )
-            local verify = conce:getVehicle( account, vehicle )
-            if not verify then
-                conce:setVehicleConce( player, { ['name'] = vehicle, ['model'] = vehicleModel }, { 255, 255, 255 }, vehicleCategory )
+            local check, message = exports['[HS]Dealership']:addVehicle( account, vehicle, false, true, { 255, 255, 255 }, 4, 1 )
+            if not check then
+                exports['[HS]Infobox']:notify( player, message, 'error' )
             end
         end;
     };
@@ -81,12 +75,10 @@ commands = {
         function( player, args )
             local vehicle = string.gsub( args[ 1 ], '-', ' ' )
             local validate = tonumber( args[ 2 ] )
-            local conce = exports['[HS]Dealership_System'];
-            local vehicleConfig = conce:getVehicleVipConfig(vehicle);
             local account = getAccountName( getPlayerAccount( player ) )
-            local verify = conce:getVehicle( account, vehicle )
-            if not verify then
-                conce:setVehicleVip( account, vehicle, conce:generatePlate( ), vehicleConfig.category, vehicleConfig.model, validate )
+            local check, message = exports['[HS]Dealership']:addVehicle( account, vehicle, false, true, { 255, 255, 255 }, 3, validate, true )
+            if not check then
+                exports['[HS]Infobox']:notify( player, message, 'error' )
             end
         end;
     };
@@ -107,7 +99,7 @@ commands = {
             local dias = tonumber( args[ 1 ] );
             local verify, _ = spotify:getPremium( account ) 
             if not verify then
-                 spotify:givePremium( account, dias )
+                 spotify:setAccountPremium( account, dias )
             end
         end;
     };

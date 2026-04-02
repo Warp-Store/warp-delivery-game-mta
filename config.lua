@@ -41,13 +41,13 @@ config = {
                 ['visivel'] = true;
                 ['notificação'] = {
                     function( player, dados )
-                        return exports['[HS]Notify_System']:notify( player, 'O(a) jogador '..dados.name..'('..dados.id..') Ativou o produto '..dados.product..' com sucesso', 'info' )
+                        return exports['[HS]Infobox']:notify( player, 'O(a) jogador '..dados.name..'('..dados.id..') Ativou o produto '..dados.product..' com sucesso', 'info' )
                     end,
                 };
             };
         };
         ['tempo:entrega'] = {
-            ['tempo'] = 2; -- Tempo que ira ficar na tela do player
+            ['tempo'] = 10; -- Tempo que ira ficar na tela do player
             ['formato'] = 1000; -- Formato de tempo ( 1000 = segundos, 60000 =  minutos, 3600000 = Hora )
             ['repetições'] = 0; -- Verificação de quantas vezes ira ficar rodando o sistema, deixe em 0 para sempre verificar.
         };

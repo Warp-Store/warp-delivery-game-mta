@@ -128,13 +128,13 @@ delivery = function( id, args, checkout )
                     }
                     config['entrega']['infobox']['notificação'][ 1 ]( ( config['entrega']['infobox']['visivel'] and root or alvo ), texto )
                end
-               for i = 1, v.quantity do
-                    commands[ product ][ 1 ]( alvo, parseArgs( name ) )
-               end
                if config['development']['update:status'] and not avisar[v.name] then
                     approve( checkout )
                     avisar[ v.name ] = true
                     outputDebugString( '[Warp-Delivery] - Produto '..v.name..' foi entregue ao jogador '..removeHex( getPlayerName( alvo ) )..' ('..id..').', 4, 85, 204, 204 )
+               end
+               for i = 1, v.quantity do
+                    commands[ product ][ 1 ]( alvo, parseArgs( name ) )
                end
           end
      end
